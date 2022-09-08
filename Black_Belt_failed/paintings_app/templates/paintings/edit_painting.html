@@ -1,0 +1,32 @@
+{% extends 'base/base.html' %}
+
+{% block title %}Edit Painting{% endblock %}
+
+
+{% block content %}
+
+    <h1>Add a Painting</h1>
+    <br><br>
+    <div class="flex-wrapper flex-evenly">
+        <form class="flex-wrapper flex-column flex-end flex-gap" action="/paintings/{{data.id}}/edit" method="POST">
+            <label>
+                Title:
+                <input type="text" name="title" value="{{data.title}}">
+            </label>
+            <label>
+                Description:
+                <textarea name="description" cols="30" rows="10">{{data.description}}</textarea>
+            </label>
+            <label>
+                Price:
+                <input type="number" name="price" min="1.00" step="1" value="{{data.price}}">
+            </label>
+            <label>
+                Quantity:
+                <input type="number" name="quantity" min="1" step="1" value="{{data.quantity}}">
+            </label>
+            <input type="submit" value="Update">
+        </form>
+    </div>
+
+{% endblock %}

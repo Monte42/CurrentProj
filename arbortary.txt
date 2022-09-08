@@ -1,0 +1,53 @@
+# Inside venv #
+
+sudo vim wsgi.py
+
+from server import app as application
+if __name__ == "__main__":
+    application.run()
+
+# Check Connection #
+gunicorn --bind 0.0.0.0:5000 wsgi:application
+
+ctrl + c
+
+deactivate
+
+
+
+
+# Out of venv #
+
+[Unit]
+Description=Gunicorn instance
+After=network.target
+[Service]
+User=ubuntu
+Group=www-data
+WorkingDirectory=/home/ubuntu/Dojo_Arbortary
+Environment="PATH=/home/ubuntu/Dojo_Arbortary/venv/bin"
+ExecStart=/home/ubuntu/Dojo_Arbortary/venv/bin/gunicorn --workers 3 --bind unix:Dojo_Arbortary_Proj.sock -m 007 wsgi:application
+[Install]
+WantedBy=multi-user.target
+
+sudo systemctl start gunicorn
+sudo systemctl enable gunicorn
+
+sudo vim /etc/nginx/sites-available/Dojo_Arbortary_Proj
+
+server {
+    listen 80;
+    server_name 34.238.250.136;
+    location / {
+        include proxy_params;
+        proxy_pass http://unix:/home/ubuntu/Dojo_Arbortary/Dojo_Arbortary_Proj.sock;
+    }
+}
+
+sudo ln -s /etc/nginx/sites-available/Dojo_Arbortary_Proj /etc/nginx/sites-enabled
+
+sudo rm /etc/nginx/sites-enabled/default
+
+sudo service nginx restart
+
+exit

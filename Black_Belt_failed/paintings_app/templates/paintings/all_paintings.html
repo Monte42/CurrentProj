@@ -1,0 +1,39 @@
+{% extends 'base/base.html' %}
+
+{% block title %}All Paintings{% endblock %}
+
+
+{% block content %}
+
+    <div class="flex-wrapper flex-evenly">
+        <div>
+            <h3>Paintings</h3>
+            <div style="border: 1px sloid white;">
+                {% for painting in paintings %}
+                    <p>
+                        <a href="/paintings/{{painting.id}}">{{painting.title}}</a>
+                        &nbsp;By&nbsp;
+                        {{painting.user.return_full_name()}}
+                        {% if painting.user_id == session.user_id %}
+                            <a href="paintings/{{painting.id}}/edit">Edit</a> |
+                            <a href="paintings/{{painting.id}}/delete">Delete</a>
+                        {% endif %}
+                    </p>
+                {% endfor %}
+            </div>
+        </div>
+        <div>
+            <h3>Your Purcahased Paintings</h3>
+            <div style="border: 1px sloid white; text-align:center;">
+                {% for painting in user.purchased_paintings %}
+                    <p>
+                        {{painting.painting.title}}
+                        &nbsp;By&nbsp;
+                        {{painting.user.return_full_name()}}
+                    </p>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+
+{% endblock %}

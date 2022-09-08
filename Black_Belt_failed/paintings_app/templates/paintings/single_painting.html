@@ -1,0 +1,31 @@
+{% extends 'base/base.html' %}
+
+{% block title %}{{ painting.title }}{% endblock %}
+
+
+{% block content %}
+
+    <div class="flex-wrapper flex-evenly">
+        <div style="width:80%;">
+            <h1>{{ painting.title }}</h1>
+        <br><br>
+        <p>Painted By {{painting.user.return_full_name()}}</p>
+        <br><br>
+        <p>Description</p>
+        <p>{{ painting.description }}</p>
+        <br><br>
+        <p>Price:</p>
+        <p>${{ painting.price }}.00</p>
+        <br><br>
+        <p>Quantity:</p>
+        <p>{{ painting.quantity - painting.purchases }}</p>
+        <br><br>
+        {% if painting.quantity - painting.purchases > 0 %}
+            <button><a href="/purchase/{{painting.id}}">Buy</a></button>
+        {% else %}
+            <P>SOLD OUT</P>
+        {% endif %}
+        </div>
+    </div>
+
+{% endblock %}

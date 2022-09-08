@@ -1,0 +1,30 @@
+    <nav>
+        <!-- request.endpoint, **request.view_args found on  -->
+        <!-- https://tedboy.github.io/flask/generated/generated/flask.Request.endpoint.html -->
+
+        {% if url_for(request.endpoint, **request.view_args) == '/paintings' %}
+            <div class="flex-wrapper flex-between flex-center-align">
+                <h1>Welcome, {{ session.user_name }}</h1>
+                <div class="flex-wrapper flex-evenly" style="width: 40%;">
+                    <a href="/paintings/new">Add Painting</a>
+                    <a href="/logout">Logout</a>
+                </div>
+            </div>
+        {% elif url_for(request.endpoint, **request.view_args) == '/paintings/new' %}
+            <div class="flex-wrapper flex-end">
+                <div class="flex-wrapper flex-evenly" style="width: 40%;">
+                    <a href="/paintings">Dashboard</a>
+                    <a href="/logout">Logout</a>
+                </div>
+            </div>
+        {% else %}
+            <div class="flex-wrapper flex-end">
+                <div class="flex-wrapper flex-evenly" style="width: 40%;">
+                    <a href="/paintings/new">Add Painting</a>
+                    <a href="/paintings">Dashboard</a>
+                    <a href="/logout">Logout</a>
+                </div>
+            </div>
+        {% endif %}
+
+    </nav>
